@@ -7,15 +7,24 @@ using Moq;
 namespace UnitTestProject
 {
     [TestClass]
-    public class StrengthTests
+    public class ComparisonTests
     {
+        Mock<Dictionary<string, Dictionary<string, double>>> mockXML;
+        Mock<Dictionary<string, double>> mockXMLInner;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            mockXML = new Mock<Dictionary<string, Dictionary<string, double>>>();
+            mockXMLInner = new Mock<Dictionary<string, double>>();
+        }
+
         [TestMethod]
         public void Test_Strength_ReturnsAnEmptyDictionary_WhenGivenAnEmptyDictionary()
         {
-            Comparison comparison = new Comparison();
-            Dictionary <string,double> given = new Dictionary<string,double>();
+            Comparison comparison = new Comparison(mockXML.Object);
 
-            Dictionary<string,double> actual = comparison.strength(given);
+            Dictionary<string,double> actual = comparison.strength();
 
             Assert.AreEqual(0, actual.Count);
         }
@@ -23,10 +32,12 @@ namespace UnitTestProject
         [TestMethod]
         public void Test_Strength_ReturnsAnDictionaryOfOneElement_WhenGiveAnDictionaryOfOneElement()
         {
-            Comparison comparison = new Comparison();
+            mockXMLInner.Object.Add("EUR", 1);
+            mockXML.Object.Add("12-12-2012", mockXMLInner.Object);
+            Comparison comparison = new Comparison(mockXML.Object);
             Dictionary<string, double> given = new Dictionary<string, double>();
 
-            Dictionary<string, double> actual = comparison.strength(given);
+            Dictionary<string, double> actual = comparison.strength();
 
             Assert.AreEqual(1, actual.Count);
         }
