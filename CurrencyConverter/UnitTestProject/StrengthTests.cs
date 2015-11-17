@@ -1,22 +1,20 @@
-﻿using System;
+﻿using CurrencyConverter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CurrencyConverter;
-using System.Collections.Generic;
 using Moq;
+using System;
+using System.Collections.Generic;
 
 namespace UnitTestProject
 {
     [TestClass]
     public class ComparisonTests
     {
-        Mock<Dictionary<string, Dictionary<string, double>>> mockXML;
-        Mock<Dictionary<string, double>> mockXMLInner;
+        Mock<List<Currency>> mockXML;
 
         [TestInitialize]
         public void Setup()
         {
-            mockXML = new Mock<Dictionary<string, Dictionary<string, double>>>();
-            mockXMLInner = new Mock<Dictionary<string, double>>();
+            mockXML = new Mock<List<Currency>>();
         }
 
         [TestMethod]
@@ -24,7 +22,7 @@ namespace UnitTestProject
         {
             Comparison comparison = new Comparison(mockXML.Object);
 
-            Dictionary<string,double> actual = comparison.strength();
+            List<Currency> actual = comparison.strength();
 
             Assert.AreEqual(0, actual.Count);
         }
@@ -32,12 +30,10 @@ namespace UnitTestProject
         [TestMethod]
         public void Test_Strength_ReturnsAnDictionaryOfOneElement_WhenGiveAnDictionaryOfOneElement()
         {
-            mockXMLInner.Object.Add("EUR", 1);
-            mockXML.Object.Add("12-12-2012", mockXMLInner.Object);
+            mockXML.Object.Add(new Currency("EU",1,"12-12-2012"));
             Comparison comparison = new Comparison(mockXML.Object);
-            Dictionary<string, double> given = new Dictionary<string, double>();
 
-            Dictionary<string, double> actual = comparison.strength();
+            List<Currency> actual = comparison.strength();
 
             Assert.AreEqual(1, actual.Count);
         }

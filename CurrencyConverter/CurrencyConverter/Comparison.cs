@@ -8,24 +8,24 @@ namespace CurrencyConverter
 {
     public class Comparison : AvaliableFunctions
     {
-        public Comparison(Dictionary<string, Dictionary<string, double>> ExchangeXML)
+        public Comparison(List<Currency> ExchangeXML)
         {
-            exchangeXML = ExchangeXML;
+            this.exchangeXML = exchangeXML;
         }
 
         /// <summary>
         /// Assumption: Dictionary is sorted to latest date on top.
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, double> strength()
+        public List<Currency> strength()
         {
             if(exchangeXML.Count==0){
-                return new Dictionary<string, double>();
+                return new List<Currency>();
             }
-            
-            Dictionary<string, double> answer = new Dictionary<string, double>();
 
-            answer = exchangeXML.First().Value.OrderBy(c => c.Value, ) as Dictionary<string, double>;
+            List<Currency> answer = new List<Currency>();
+
+            answer = exchangeXML.FindAll(c => c.date == exchangeXML.First().date).ToList();
 
             return answer;
         }

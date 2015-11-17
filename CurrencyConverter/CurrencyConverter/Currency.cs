@@ -8,6 +8,14 @@ namespace CurrencyConverter
 {
     public class Currency
     {
+
+        public Currency(string symbol, double value, string date)
+        {
+            this.symbol = symbol;
+            this.value = value;
+            this.date = date;
+        }
+
         private string _symbol;
         public string symbol
         {
