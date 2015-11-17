@@ -15,5 +15,11 @@ namespace CurrencyConverter
             set { _chosenCurrency = value; }
         }
 
+        private Dictionary<string,Dictionary<string,double>> _exchangeXML;
+        public Dictionary<string,Dictionary<string,double>> exchangeXML
+        {
+            get { return _exchangeXML; }
+            set { _exchangeXML = value; }
+        }
     }
 }

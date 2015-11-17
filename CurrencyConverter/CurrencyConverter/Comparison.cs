@@ -8,6 +8,10 @@ namespace CurrencyConverter
 {
     public class Comparison : AvaliableFunctions
     {
+        public Dictionary<string, double> strength(Dictionary<string, double> given)
+        {
 
+            return given;
+        }
     }
 }
