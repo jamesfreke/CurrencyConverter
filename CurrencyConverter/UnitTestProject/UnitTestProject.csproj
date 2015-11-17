@@ -52,7 +52,7 @@
   <ItemGroup>
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ConverterTests.cs" />
+    <Compile Include="StrengthTests.cs" />
     <Compile Include="XMLRetriever.cs" />
   </ItemGroup>
   <ItemGroup>
