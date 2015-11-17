@@ -21,6 +21,14 @@ namespace CurrencyConverter
             get { return _value; }
             set { _value = value; }
         }
+
+        private string _date;
+        public string date
+        {
+            get { return _date; }
+            set { _date = value; }
+        }
+        
         
     }
 }
