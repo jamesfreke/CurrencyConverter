@@ -26,7 +26,7 @@ namespace CurrencyConverter
             List<Currency> answer = new List<Currency>();
 
             answer = exchangeXML.FindAll(d => d.date == exchangeXML[0].date).ToList();
-            answer = answer.OrderByDescending(r => r.value).ToList();
+            answer = answer.OrderBy(r => r.value).ToList();
 
             return answer;
         }
@@ -55,25 +55,101 @@ namespace CurrencyConverter
             }
 
             answer = exchangeXML.FindAll(d => d.date == exchangeXML[0].date).ToList();
-            Currency euro = answer.Find(c => c.symbol == "EU");
-            answer = answer.FindAll(r => r.value >= euro.value);
+            Currency euro = answer.Find(c => c.symbol == currencyToCompare);
+            answer = answer.FindAll(r => r.value > euro.value);
 
             return answer;
         }
 
-        //public Currency HighestAgainist(string CurrencyCompareTo)
-        //{
+        public Currency HighestOrLowestRate(string currencyToGet, Boolean getHighest)
+        {
+            if (exchangeXML.Where(x => x.symbol == currencyToGet).ToList().Count >0)
+            {
+                List<Currency> selected = new List<Currency>();
+                selected = exchangeXML.FindAll(x => x.symbol == currencyToGet).ToList();
 
-        //}
+                if(getHighest)
+                {
+                    return selected.OrderByDescending(x => x.value).ToList()[0];
+                }
+                return selected.OrderBy(x => x.value).ToList()[0];
+            }
+            return new Currency("", 0, "");
+        }
 
-        //public Currency LowestAgainist(string CurrencyCompareTo)
-        //{
+        public List<Currency> HighestAndLowestPerCurrency(string currencyAgainist)
+        {
+            List<Currency> answer = new List<Currency>();
 
-        //}
-        //public Currency GreatestChangeNintyDays(string CurrencyCompareTo)
-        //{
+            if(exchangeXML.Count == 0)
+            {
+                return answer;
+            }
+            
+            string currencyCompareTo;
+            if(currencyAgainist == "")
+            {
+                currencyCompareTo = "EU";
+            }
+            else
+            {
+                currencyCompareTo = currencyAgainist;
+            }
 
-        //}
+            List<Currency> distinctSymbol = new List<Currency>();
+            distinctSymbol = exchangeXML.Distinct(new CurrencyComparerSymbol()).ToList();
+
+            foreach(Currency c in distinctSymbol)
+            {
+               answer.Add(HighestOrLowestRate(c.symbol,true)); 
+               answer.Add(HighestOrLowestRate(c.symbol,false));  
+            }
+
+            answer = answer.OrderBy(x => x.symbol).ThenBy(x => x.value).ToList();
+            return answer;
+        }
+
+        /// <summary>
+        /// List rather than a singular currency, incase there is more than one that
+        /// has the exact greatest change.
+        /// </summary>
+        /// <param name="CurrencyCompareTo"></param>
+        /// <returns></returns>
+        public List<Currency> GreatestChangeNintyDays(string CurrencyCompareTo)
+        {
+            List<Currency> answer = new List<Currency>();
+            Currency baseCurrency = new Currency("",0);
+
+            if (exchangeXML.Count == 0)
+            {
+                return answer;
+            }
+
+            string currencyCompareTo;
+            if (CurrencyCompareTo == "")
+            {
+                currencyCompareTo = "EU";
+            }
+            else
+            {
+                currencyCompareTo = CurrencyCompareTo;
+            }
+
+            List<Currency> distinctSymbol = new List<Currency>();
+            distinctSymbol = exchangeXML.Distinct(new CurrencyComparerSymbol()).ToList();
+
+            foreach (Currency c in distinctSymbol)
+            {
+                double answerStore = Math.Abs(HighestOrLowestRate(c.symbol, true).value - HighestOrLowestRate(c.symbol, false).value);
+
+                if (answerStore >= baseCurrency.value)
+                {
+                    baseCurrency.value = answerStore;
+                    answer.Add(new Currency(c.symbol, answerStore));
+                }
+            }
+            return answer;
+        }
 
         //public Currency SmallestChangeNintyDays(string CurrencyCompareTo)
         //{
