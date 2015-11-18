@@ -12,14 +12,36 @@ namespace CurrencyConverter
     {
         static void Main(string[] args)
         {
-            XML xmlTest = new XML();
-            XMLController xmlTest2 = new XMLController();
+            Console.WriteLine("Welcome to the exchange rate system!");
+            Console.WriteLine("Note: The data is correct for the 18/11/2015 and 90 days prior to this date.");
+            Console.WriteLine("-------");
+            Console.WriteLine("Preparing the data. Please wait...");
 
-            xmlTest.XMLSetUp();
+            XML xml = new XML();
+            XMLController xmlController = new XMLController();
+
+            xml.XMLSetUp();
             //xmlTest2.ReadXmlFile();
             
 
             Console.ReadLine();
+
+            
+
+            //Console.WriteLine("What do you want to do? {0}", );
+            
+            switch (Console.ReadLine())
+	    {
+                case "1":
+
+                    break;
+
+		    default:
+                    break;
+	    } 
+
+            Console.ReadLine();
+
         }
     }
 }

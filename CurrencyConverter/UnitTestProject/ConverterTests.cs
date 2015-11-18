@@ -18,12 +18,14 @@ namespace UnitTestProject
             Mock<List<Currency>> currencyList = new Mock<List<Currency>>();
 
             Mock<Currency> a = new Mock<Currency>("EUR", 1, "12-12-2012");
-            Mock<Currency> b = new Mock<Currency>("GBP", 0.5, "12-12-2012");
-            Mock<Currency> c = new Mock<Currency>("USD", 3, "12-12-2012");
+            Mock<Currency> b = new Mock<Currency>("GBP", 0.7009, "12-12-2012");
+            Mock<Currency> c = new Mock<Currency>("USD", 1.0666, "12-12-2012");
+            Mock<Currency> d = new Mock<Currency>("JPY", 131.65, "12-12-2012");
 
             currencyList.Object.Add(a.Object);
             currencyList.Object.Add(b.Object);
             currencyList.Object.Add(c.Object);
+            currencyList.Object.Add(d.Object);
 
             converter = new Converter(currencyList.Object);
         }
@@ -48,14 +50,14 @@ namespace UnitTestProject
             double value = 0.0;
 
             //Act
-           string result = converter.convertTo(value, "GBP", "USD");
+            string result = converter.convertTo(value, "GBP", "USD");
 
             //Assert
             Assert.AreEqual("0 GBP is 0 USD", result);
         }
 
         [TestMethod]
-        public void Test_Converter_ReturnsAConversionWHenGivenCorrectValues()
+        public void Test_Converter_ReturnsAConversionWhenGivenCorrectValues()
         {
             //Arrange
             double value = 100;
@@ -64,7 +66,20 @@ namespace UnitTestProject
             string result = converter.convertTo(value, "EUR", "USD");
 
             //Assert
-            Assert.AreEqual("100 EUR is 300 USD", result);
+            Assert.AreEqual("100 EUR is 106.66 USD", result);
+        }
+
+        [TestMethod]
+        public void Test_Converter_ReturnsAConversionWhenGivenCorrectValuesFromJPYToUSD()
+        {
+            //Arrange
+            double value = 1;
+
+            //Act
+            string result = converter.convertTo(value, "JPY", "USD");
+
+            //Assert
+            Assert.AreEqual("1 JPY is 0.01 USD", result);
         }
          
     }
