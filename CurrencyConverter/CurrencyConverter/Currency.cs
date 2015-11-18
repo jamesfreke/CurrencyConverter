@@ -16,6 +16,11 @@ namespace CurrencyConverter
             this.date = date;
         }
 
+        public Currency(string symbol, double value){
+            this.symbol = symbol;
+            this.value = value;
+        }
+
         private string _symbol;
         public string symbol
         {
