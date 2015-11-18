@@ -21,14 +21,21 @@ namespace CurrencyConverter
         }
 
         public string convertTo(double value, string symbol1, string symbol2)
-        {            
-            double rate = exchangeXML.dataListFromXML.Find(symbol => symbol.symbol == symbol2).value;
+        {
+            if (exchangeXML.dataListFromXML.Where(symbol => symbol.symbol == symbol2).Count() > 0)
+            {
+                double rate = exchangeXML.dataListFromXML.Find(symbol => symbol.symbol == symbol2).value;
 
-            string returnValue1 = value + symbol1;
+                string returnValue1 = value + symbol1;
 
-            string returnValue2 = (value * rate) + symbol2;
+                string returnValue2 = (value * rate) + symbol2;
 
-            return  returnValue1 + " is " + returnValue2;
+                return returnValue1 + " is " + returnValue2;
+            }
+            else
+            {
+                return "Currency not found";
+            }
         }
     }
 }
