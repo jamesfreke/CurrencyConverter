@@ -220,27 +220,27 @@ namespace UnitTestProject
         }
 
         [TestMethod]
-        public void Test_GreatestChangeNintyDays_ReturnsAnEmptyList_WhenGivenAnEmptyList()
+        public void Test_GreatestOrSmallestChangeNintyDays_ReturnsAnEmptyList_WhenGivenAnEmptyList()
         {
             Comparison comparison = new Comparison(mockXML.Object);
 
-            List<Currency> actual = comparison.GreatestChangeNintyDays("");
+            List<Currency> actual = comparison.GreatestOrSmallestChangeNintyDays("", true);
 
             Assert.AreEqual(0, actual.Count);
         }
 
         [TestMethod]
-        public void Test_HighestAndLowestPerCurrency_ReturnsAListOfTwoElements_WhenGivenAListOfFiveElementsFromTheSameSymbol()
+        public void Test_GreatestOrSmallestChangeNintyDays_ReturnsAListOfTwoElements_WhenGivenAListOfFiveElementsFromTheSameSymbol()
         {
             Mock<Currency> a = new Mock<Currency>("EU", 1, "12-12-2012");
-            Mock<Currency> b = new Mock<Currency>("EU", 0, "12-12-2012");
-            Mock<Currency> c = new Mock<Currency>("EU", 4, "12-12-2012");
+            Mock<Currency> b = new Mock<Currency>("EU", 0, "13-12-2012");
+            Mock<Currency> c = new Mock<Currency>("EU", 4, "14-12-2012");
             Mock<Currency> d = new Mock<Currency>("GBP", 2, "12-12-2012");
-            Mock<Currency> e = new Mock<Currency>("GBP", 3, "12-12-2012");
-            Mock<Currency> f = new Mock<Currency>("GBP", 3, "12-12-2012");
+            Mock<Currency> e = new Mock<Currency>("GBP", 3, "13-12-2012");
+            Mock<Currency> f = new Mock<Currency>("GBP", 3, "14-12-2012");
             Mock<Currency> g = new Mock<Currency>("USD", 4, "12-12-2012");
-            Mock<Currency> h = new Mock<Currency>("USD", 4, "12-12-2012");
-            Mock<Currency> i = new Mock<Currency>("USD", 4, "12-12-2012");
+            Mock<Currency> h = new Mock<Currency>("USD", 4, "13-12-2012");
+            Mock<Currency> i = new Mock<Currency>("USD", 4, "14-12-2012");
             List<Currency> distinctDoesNotLikeMockLists = new List<Currency>();
 
             distinctDoesNotLikeMockLists.Add(a.Object);
@@ -255,14 +255,62 @@ namespace UnitTestProject
             Comparison comparison = new Comparison(distinctDoesNotLikeMockLists);
 
             List<Currency> expected = new List<Currency>();
-            expected.Add(new Currency("EU",4);
+            expected.Add(new Currency("EU",-4));
 
-            List<Currency> actual = comparison.HighestAndLowestPerCurrency("");
+            List<Currency> actual = comparison.GreatestOrSmallestChangeNintyDays("", true);
 
-            Assert.IsTrue(actual.Count==1 && );
-
-            //divide yen by dollar ot get dollars to yens
+            Assert.IsTrue(actual.Count==1 && actual[0].symbol == expected[0].symbol && actual[0].value == expected[0].value);
         }
 
+        [TestMethod]
+        public void Test_GreatestOrSmallestChangeNintyDays_ReturnsAListOfTenElements_WhenGivenAListOfTenDifferentCurrencies()
+        {
+            Mock<Currency> a = new Mock<Currency>("EU", 1, "12-12-2012");
+            Mock<Currency> b = new Mock<Currency>("EU", 0, "13-12-2012");
+            Mock<Currency> c = new Mock<Currency>("EU", 4, "14-12-2012");
+            Mock<Currency> d = new Mock<Currency>("GBP", 2, "12-12-2012");
+            Mock<Currency> e = new Mock<Currency>("GBP", 3, "13-12-2012");
+            Mock<Currency> f = new Mock<Currency>("GBP", 3, "14-12-2012");
+            Mock<Currency> g = new Mock<Currency>("USD", 4, "12-12-2012");
+            Mock<Currency> h = new Mock<Currency>("USD", 4, "13-12-2012");
+            Mock<Currency> i = new Mock<Currency>("USD", 4, "14-12-2012");
+            Mock<Currency> j = new Mock<Currency>("JPY", 4, "12-12-2012");
+            Mock<Currency> k = new Mock<Currency>("JPY", 10, "13-12-2012");
+            Mock<Currency> l = new Mock<Currency>("BGN", 5, "12-12-2012");
+            Mock<Currency> m = new Mock<Currency>("BGN", 4, "13-12-2012");
+            Mock<Currency> n = new Mock<Currency>("CZK", 7, "12-12-2012");
+            Mock<Currency> o = new Mock<Currency>("CZK", 4, "13-12-2012");
+            Mock<Currency> p = new Mock<Currency>("RON", 7, "12-12-2012");
+            Mock<Currency> q = new Mock<Currency>("RON", 4, "13-12-2012");
+            Mock<Currency> r = new Mock<Currency>("RUB", 24, "12-12-2012");
+            Mock<Currency> s = new Mock<Currency>("RUB", 4, "13-12-2012");
+            Mock<Currency> t = new Mock<Currency>("HRK", 44, "12-12-2012");
+            Mock<Currency> u = new Mock<Currency>("HRK", 4, "13-12-2012");
+            Mock<Currency> v = new Mock<Currency>("ZAR", 14, "12-12-2012");
+            Mock<Currency> w = new Mock<Currency>("ZAR", 4, "13-12-2012");
+            List<Currency> distinctDoesNotLikeMockLists = new List<Currency>() {
+                a.Object, b.Object,c.Object,d.Object,e.Object,f.Object,g.Object,h.Object,
+            i.Object,j.Object,k.Object,l.Object,m.Object,n.Object,o.Object,p.Object,q.Object,
+            r.Object,s.Object,t.Object,u.Object,v.Object,w.Object};
+
+            Comparison comparison = new Comparison(distinctDoesNotLikeMockLists);
+
+            List<Currency> expected = new List<Currency>(){
+            new Currency("JPY", -6),
+            new Currency("EU", -4), 
+            new Currency("GBP", -1),
+            new Currency("USD", 0),
+            new Currency("BGN", 1),
+            new Currency("CZK", 3),
+            new Currency("RON", 3),
+            new Currency("ZAR", 10),
+            new Currency("RUB", 20),
+            new Currency("HRK", 40)
+            };
+
+            List<Currency> actual = comparison.GreatestOrSmallestChangeNintyDays("", false);
+
+            Assert.IsTrue(actual.SequenceEqual(expected,new CurrencyComparerSymbolAndValue()));
+        }
     }
 }
