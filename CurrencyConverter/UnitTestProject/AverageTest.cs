@@ -31,7 +31,7 @@ namespace UnitTestProject
             List<Currency> mockCurrencyList = new List<Currency>();
 
             //Act
-            List<Currency> currencyList = average.GetList()
+            List<Currency> currencyList = average.GetList();
 
             //Assert
 
