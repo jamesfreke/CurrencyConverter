@@ -45,6 +45,8 @@
     <Compile Include="Average.cs" />
     <Compile Include="Converter.cs" />
     <Compile Include="Currency.cs" />
+    <Compile Include="CurrencyComparerSymbol.cs" />
+    <Compile Include="CurrencyComparerSymbolAndValue.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Comparison.cs" />

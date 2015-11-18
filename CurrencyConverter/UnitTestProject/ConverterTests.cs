@@ -6,37 +6,31 @@ using System.Collections.Generic;
 
 namespace UnitTestProject
 {
-    //[TestClass]
-    //public class ConverterTests
-    //{
-    //    Converter converter;
+    [TestClass]
+    public class ConverterTests
+    {
+        Converter converter;
+        Mock<XML> xml;
 
-    //    [TestMethod]
-    //    public void Test_CovertToMethod_Returns0WhenNoValueIsGiven()
-    //    {
-    //        //Arrange
-    //        converter = new Converter();
-    //        double value = 0.0;
+        [TestInitialize]
+        public void Setup()
+        {
+            xml = new Mock<XML>();
+            xml.Object.dataListFromXML = new List<Currency>();
+            converter = new Converter(xml.Object);
+        }
 
-    //        //Act
-    //        double result = converter.convertTo("GBP", "USD", value);
+        [TestMethod]
+        public void Test_CovertToMethod_ReturnsAString()
+        {
+            //Arrange
+            double value = 0.0;
 
-    //        //Assert
-    //        Assert.AreEqual(result, 0.0);
-    //    }
+            //Act
+            string result = converter.convertTo(value, "GBP", "Euro");
 
-    //    [TestMethod]
-    //    public void Test_ConvertToMethod_ReturnsAValueWhenAValueIsGiven()
-    //    {
-    //        //Arrange
-    //        converter = new Converter();
-    //        double value = 100;
-
-    //        //Act
-    //        double result = converter.convertTo("GBP", "USD", value);
-
-    //        //Assert
-    //        Assert.AreEqual(result, 100);
-    //    }
-    //}
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(string));
+        }
+    }
 }
