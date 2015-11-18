@@ -7,35 +7,28 @@ using System.Threading.Tasks;
 namespace CurrencyConverter
 {
     public class Converter : AvaliableFunctions
-    {
-        private XML _exchangeXML;
-        public XML exchangeXML
-        {
-            get { return _exchangeXML; }
-            set { _exchangeXML = value; }
-        }
-        
-        public Converter(XML ExchangeXML)
+    {       
+        public Converter(List<Currency> ExchangeXML)
         {
             exchangeXML = ExchangeXML;
         }
 
         public string convertTo(double value, string symbol1, string symbol2)
         {
-            if (exchangeXML.dataListFromXML.Where(symbol => symbol.symbol == symbol2).Count() > 0)
+            if (exchangeXML.Where(symbol => symbol.symbol == symbol2).Count() > 0)
             {
-                double rate = exchangeXML.dataListFromXML.Find(symbol => symbol.symbol == symbol2).value;
+                double rate = exchangeXML.Find(symbol => symbol.symbol == symbol2).value;
 
-                string returnValue1 = value + symbol1;
+                string returnValue1 = value +" " + symbol1;
 
-                string returnValue2 = (value * rate) + symbol2;
+                string returnValue2 = (value * rate) +" "+ symbol2;
 
-                return returnValue1 + " is " + returnValue2;
+                return returnValue1 +  " is " + returnValue2;
             }
             else
             {
                 return "Currency not found";
-            }
+            }          
         }
     }
 }

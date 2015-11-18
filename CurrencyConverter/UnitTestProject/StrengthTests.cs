@@ -229,40 +229,40 @@ namespace UnitTestProject
             Assert.AreEqual(0, actual.Count);
         }
 
-        [TestMethod]
-        public void Test_HighestAndLowestPerCurrency_ReturnsAListOfTwoElements_WhenGivenAListOfFiveElementsFromTheSameSymbol()
-        {
-            Mock<Currency> a = new Mock<Currency>("EU", 1, "12-12-2012");
-            Mock<Currency> b = new Mock<Currency>("EU", 0, "12-12-2012");
-            Mock<Currency> c = new Mock<Currency>("EU", 4, "12-12-2012");
-            Mock<Currency> d = new Mock<Currency>("GBP", 2, "12-12-2012");
-            Mock<Currency> e = new Mock<Currency>("GBP", 3, "12-12-2012");
-            Mock<Currency> f = new Mock<Currency>("GBP", 3, "12-12-2012");
-            Mock<Currency> g = new Mock<Currency>("USD", 4, "12-12-2012");
-            Mock<Currency> h = new Mock<Currency>("USD", 4, "12-12-2012");
-            Mock<Currency> i = new Mock<Currency>("USD", 4, "12-12-2012");
-            List<Currency> distinctDoesNotLikeMockLists = new List<Currency>();
+        //[TestMethod]
+        //public void Test_HighestAndLowestPerCurrency_ReturnsAListOfTwoElements_WhenGivenAListOfFiveElementsFromTheSameSymbol()
+        //{
+        //    Mock<Currency> a = new Mock<Currency>("EU", 1, "12-12-2012");
+        //    Mock<Currency> b = new Mock<Currency>("EU", 0, "12-12-2012");
+        //    Mock<Currency> c = new Mock<Currency>("EU", 4, "12-12-2012");
+        //    Mock<Currency> d = new Mock<Currency>("GBP", 2, "12-12-2012");
+        //    Mock<Currency> e = new Mock<Currency>("GBP", 3, "12-12-2012");
+        //    Mock<Currency> f = new Mock<Currency>("GBP", 3, "12-12-2012");
+        //    Mock<Currency> g = new Mock<Currency>("USD", 4, "12-12-2012");
+        //    Mock<Currency> h = new Mock<Currency>("USD", 4, "12-12-2012");
+        //    Mock<Currency> i = new Mock<Currency>("USD", 4, "12-12-2012");
+        //    List<Currency> distinctDoesNotLikeMockLists = new List<Currency>();
 
-            distinctDoesNotLikeMockLists.Add(a.Object);
-            distinctDoesNotLikeMockLists.Add(b.Object);
-            distinctDoesNotLikeMockLists.Add(c.Object);
-            distinctDoesNotLikeMockLists.Add(d.Object);
-            distinctDoesNotLikeMockLists.Add(e.Object);
-            distinctDoesNotLikeMockLists.Add(f.Object);
-            distinctDoesNotLikeMockLists.Add(g.Object);
-            distinctDoesNotLikeMockLists.Add(h.Object);
-            distinctDoesNotLikeMockLists.Add(i.Object);
-            Comparison comparison = new Comparison(distinctDoesNotLikeMockLists);
+        //    distinctDoesNotLikeMockLists.Add(a.Object);
+        //    distinctDoesNotLikeMockLists.Add(b.Object);
+        //    distinctDoesNotLikeMockLists.Add(c.Object);
+        //    distinctDoesNotLikeMockLists.Add(d.Object);
+        //    distinctDoesNotLikeMockLists.Add(e.Object);
+        //    distinctDoesNotLikeMockLists.Add(f.Object);
+        //    distinctDoesNotLikeMockLists.Add(g.Object);
+        //    distinctDoesNotLikeMockLists.Add(h.Object);
+        //    distinctDoesNotLikeMockLists.Add(i.Object);
+        //    Comparison comparison = new Comparison(distinctDoesNotLikeMockLists);
 
-            List<Currency> expected = new List<Currency>();
-            expected.Add(new Currency("EU",4);
+        //    List<Currency> expected = new List<Currency>();
+        //    expected.Add(new Currency("EU",4));
 
-            List<Currency> actual = comparison.HighestAndLowestPerCurrency("");
+        //    List<Currency> actual = comparison.HighestAndLowestPerCurrency("");
 
-            Assert.IsTrue(actual.Count==1 && );
+        //    Assert.IsTrue(actual.Count==1 && );
 
             //divide yen by dollar ot get dollars to yens
-        }
+        //}
 
     }
 }

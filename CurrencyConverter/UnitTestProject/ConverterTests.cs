@@ -10,18 +10,26 @@ namespace UnitTestProject
     public class ConverterTests
     {
         Converter converter;
-        Mock<XML> xml;
+        Mock<List<Currency>> currencyList;
 
         [TestInitialize]
         public void Setup()
         {
-            xml = new Mock<XML>();
-            xml.Object.dataListFromXML = new List<Currency>();
-            converter = new Converter(xml.Object);
+            Mock<List<Currency>> currencyList = new Mock<List<Currency>>();
+
+            Mock<Currency> a = new Mock<Currency>("EUR", 1, "12-12-2012");
+            Mock<Currency> b = new Mock<Currency>("GBP", 0.5, "12-12-2012");
+            Mock<Currency> c = new Mock<Currency>("USD", 3, "12-12-2012");
+
+            currencyList.Object.Add(a.Object);
+            currencyList.Object.Add(b.Object);
+            currencyList.Object.Add(c.Object);
+
+            converter = new Converter(currencyList.Object);
         }
 
         [TestMethod]
-        public void Test_CovertToMethod_ReturnsAString()
+        public void Test_ConvertToMethod_ReturnsAString()
         {
             //Arrange
             double value = 0.0;
@@ -32,5 +40,32 @@ namespace UnitTestProject
             //Assert
             Assert.IsInstanceOfType(result, typeof(string));
         }
+
+        [TestMethod]
+        public void Test_ConvertToMethod_Returns0WhenGivenNoValue()
+        {
+            //Arrange
+            double value = 0.0;
+
+            //Act
+           string result = converter.convertTo(value, "GBP", "USD");
+
+            //Assert
+            Assert.AreEqual("0 GBP is 0 USD", result);
+        }
+
+        [TestMethod]
+        public void Test_Converter_ReturnsAConversionWHenGivenCorrectValues()
+        {
+            //Arrange
+            double value = 100;
+
+            //Act
+            string result = converter.convertTo(value, "EUR", "USD");
+
+            //Assert
+            Assert.AreEqual("100 EUR is 300 USD", result);
+        }
+         
     }
 }
