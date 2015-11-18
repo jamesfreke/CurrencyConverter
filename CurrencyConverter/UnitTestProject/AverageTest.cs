@@ -59,5 +59,19 @@ namespace UnitTestProject
             //Assert
             Assert.AreEqual(expected, returnedAverage);
         }
+
+        [TestMethod]
+        public void Test_ListOfCurrencyNames_TestsThatItReturnsAList_ReturnsAList()
+        {
+            //Arrange
+            List<string> expected = new List<string>();
+            List<string> returnedList = new List<string>();
+
+            //Act
+            returnedList = average.GetCurrencyNames();
+
+            //Assert
+            Assert.IsInstanceOfType(returnedList, typeof(List<string>));
+        }
     }
 }

@@ -22,19 +22,34 @@ namespace UnitTestProject
             xml = Xml;
         }
 
+        List<Currency> listOfAverages = new List<Currency>();
         
         public List<Currency> GetList()
         {
             return exchangeXML;
         }
 
+        public List<string> GetCurrencyNames()
+        {
+             List<string> listOfCurrencyNames = new List<string>();
+
+            int numberOfCurrencies = exchangeXML.FindIndex(x => x.symbol == "EUR");
+
+            for (int i = 0; i <= numberOfCurrencies; i++)
+            {
+                listOfCurrencyNames.Add(exchangeXML[i].symbol);
+            }
+            return listOfCurrencyNames;
+        }
+
+       
+
         public double FindAverage(List<Currency> Currency)
         {
+            
+
             double sum = 0;
-            //for (int i = 0; i < Currency.Count; i++)
-            //{
-            //    sum += Currency[i].value;
-            //}
+            //exchangeXML.FindAll();
             return sum;
         }
     }
