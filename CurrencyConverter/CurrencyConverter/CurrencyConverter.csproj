@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AvaliableFunctions.cs" />
+    <Compile Include="Average.cs" />
     <Compile Include="Converter.cs" />
     <Compile Include="Currency.cs" />
     <Compile Include="Program.cs" />
