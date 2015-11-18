@@ -9,12 +9,21 @@ namespace UnitTestProject
     [TestClass]
     public class AverageTest
     {
+        XML xml;
+        Average average;
+        Mock<Average> mockCurrencyList;
+        [TestInitialize]
+        public void SetUp()
+        {
+            xml = new XML();
+            average = new Average(xml);
+            mockCurrencyList = new Mock<Average>(xml);
+        }
         [TestMethod]
         public void Test_GetList_TestsTheGetListMethodCallsTheGetListFunction_VerifyGetListIsCalledOnce()
         {
             //Arrange
-            Average average = new Average();
-            Mock<Average> mockCurrencyList = new Mock<Average>();
+            Mock<Average> mockCurrencyList = new Mock<Average>(xml);
 
             //Act
             List<Currency> currencyList = mockCurrencyList.Object.GetList();
@@ -27,11 +36,10 @@ namespace UnitTestProject
         public void Test_GetListTestsTheGetListMethodReturnsAListOfCurrencies_ReturnTypeIsList()
         {
             //Arrange
-            Average average = new Average();
             List<Currency> mockCurrencyList = new List<Currency>();
 
             //Act
-            List<Currency> currencyList = average.GetList()
+            List<Currency> currencyList = average.GetList();
 
             //Assert
 
