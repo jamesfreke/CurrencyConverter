@@ -13,8 +13,11 @@ namespace CurrencyConverter
         static void Main(string[] args)
         {
             XML xmlTest = new XML();
+            XMLController xmlTest2 = new XMLController();
 
-            xmlTest.ReadXmlFile();
+            xmlTest.XMLSetUp();
+            //xmlTest2.ReadXmlFile();
+            
 
             Console.ReadLine();
         }

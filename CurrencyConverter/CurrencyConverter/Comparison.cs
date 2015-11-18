@@ -115,45 +115,49 @@ namespace CurrencyConverter
         /// </summary>
         /// <param name="CurrencyCompareTo"></param>
         /// <returns></returns>
-        public List<Currency> GreatestChangeNintyDays(string CurrencyCompareTo)
+        public List<Currency> GreatestOrSmallestChangeNintyDays(string currencyCompareTo, Boolean greatest)
         {
             List<Currency> answer = new List<Currency>();
-            Currency baseCurrency = new Currency("",0);
 
             if (exchangeXML.Count == 0)
             {
                 return answer;
             }
 
-            string currencyCompareTo;
-            if (CurrencyCompareTo == "")
+            string currencyCompare;
+            if (currencyCompareTo == "")
             {
-                currencyCompareTo = "EU";
+                currencyCompare = "EU";
             }
             else
             {
-                currencyCompareTo = CurrencyCompareTo;
+                currencyCompare = currencyCompareTo;
             }
 
             List<Currency> distinctSymbol = new List<Currency>();
             distinctSymbol = exchangeXML.Distinct(new CurrencyComparerSymbol()).ToList();
+            List<Currency> tempStore = new List<Currency>();
 
             foreach (Currency c in distinctSymbol)
             {
-                double answerStore = Math.Abs(HighestOrLowestRate(c.symbol, true).value - HighestOrLowestRate(c.symbol, false).value);
-
-                if (answerStore >= baseCurrency.value)
-                {
-                    baseCurrency.value = answerStore;
-                    answer.Add(new Currency(c.symbol, answerStore));
-                }
+                List<Currency> temporary = new List<Currency>();
+                temporary.Add(HighestOrLowestRate(c.symbol, true));
+                temporary.Add(HighestOrLowestRate(c.symbol, false));
+                temporary = temporary.OrderByDescending(x => x.date).ToList();
+                double answerStore = temporary[1].value - temporary[0].value;
+                tempStore.Add(new Currency(c.symbol, answerStore));
             }
-            return answer;
+
+            if (greatest)
+            {
+                tempStore = tempStore.OrderByDescending(x => Math.Abs(x.value)).ToList();
+                return tempStore.FindAll(x => x.value == tempStore[0].value).ToList();
+            }
+
+            tempStore = tempStore.OrderBy(x => Math.Abs(x.value)).Take(10).OrderBy(x => x.value).ToList();
+            return tempStore;
+            
         }
 
-        //public Currency SmallestChangeNintyDays(string CurrencyCompareTo)
-        //{
-
-        //}
     }
 }

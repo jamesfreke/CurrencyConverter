@@ -9,40 +9,55 @@ namespace UnitTestProject
     [TestClass]
     public class AverageTest
     {
-        XML xml;
         Average average;
-        Mock<Average> mockCurrencyList;
+        Mock<XML> xml;
+
         [TestInitialize]
         public void SetUp()
         {
-            xml = new XML();
-            average = new Average(xml);
-            mockCurrencyList = new Mock<Average>(xml);
+            xml = new Mock<XML>();
+            List<Currency> xmlData= xml.Object.exchangeXML;
+            //xml.Setup(x => x.SetUp()).
+            average = new Average(xml.Object);
         }
-        [TestMethod]
-        public void Test_GetList_TestsTheGetListMethodCallsTheGetListFunction_VerifyGetListIsCalledOnce()
-        {
-            //Arrange
-            Mock<Average> mockCurrencyList = new Mock<Average>(xml);
 
-            //Act
-            List<Currency> currencyList = mockCurrencyList.Object.GetList();
+        //[TestMethod]
+        //public void Test_GetList_TestsTheGetListMethodCallsTheGetListFunction_VerifyGetListIsCalledOnce()
+        //{
+        //    //Arrange
 
-            //Assert
-            mockCurrencyList.Verify(x => x.GetList(), Times.Once);
-        }
+        //    //Act
+        //    List<Currency> currencyList = average.GetList();
+
+        //    //Assert
+        //    Assert
+        //}
 
         [TestMethod]
         public void Test_GetListTestsTheGetListMethodReturnsAListOfCurrencies_ReturnTypeIsList()
         {
             //Arrange
-            List<Currency> mockCurrencyList = new List<Currency>();
+            List<Currency> xmlData = xml.Object.exchangeXML;
 
             //Act
             List<Currency> currencyList = average.GetList();
 
             //Assert
+            Assert.IsInstanceOfType(currencyList, typeof(List<Currency>));
+        }
 
+        [TestMethod]
+        public void Test_FindAverage_TestsThatFindAverageReturnsADouble_ReturnsADouble()
+        {
+            //Arrange
+            List<Currency> xmlData = xml.Object.exchangeXML;
+            double expected = 0.0;
+
+            //Act
+            double returnedAverage = average.FindAverage(xmlData);
+
+            //Assert
+            Assert.AreEqual(expected, returnedAverage);
         }
     }
 }
