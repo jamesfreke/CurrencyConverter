@@ -21,10 +21,21 @@ namespace UnitTestProject
         {
             xml = Xml;
         }
+
         
-        public virtual List<Currency> GetList()
+        public List<Currency> GetList()
         {
-            return xml.dataListFromXML;
+            return exchangeXML;
+        }
+
+        public double FindAverage(List<Currency> Currency)
+        {
+            double sum = 0;
+            //for (int i = 0; i < Currency.Count; i++)
+            //{
+            //    sum += Currency[i].value;
+            //}
+            return sum;
         }
     }
 }
