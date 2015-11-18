@@ -10,14 +10,17 @@ namespace CurrencyConverter
     {
         List<Currency> exchangeXML;
 
+
         public Converter(List<Currency> exchangeXML)
         {
             this.exchangeXML = exchangeXML;
         }
 
-        public double convertTo(string symbol, string symbol2, double value)
+        public double convertTo(string symbol1, string symbol2, double value)
         {
-            return value;            
+            return value;
         }
+
+        
     }
 }

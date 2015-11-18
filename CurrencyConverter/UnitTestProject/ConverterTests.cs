@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CurrencyConverter;
+using Moq;
+using System.Collections.Generic;
 
 namespace UnitTestProject
 {

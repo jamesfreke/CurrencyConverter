@@ -28,9 +28,9 @@ namespace CurrencyConverter
                         foreach (XmlNode n3 in n2.ChildNodes)
                         {
                             string currency = n3.Attributes[0].Value;
-                            //Console.WriteLine(currency);
+                            Console.WriteLine(currency);
                             string rate = n3.Attributes[1].Value;
-                            //Console.WriteLine(rate);
+                            Console.WriteLine(rate);
                         }
                     }
                 }
