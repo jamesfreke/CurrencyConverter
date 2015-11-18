@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace CurrencyConverter
 {
-    public class Converter : AvaliableFunctions
-    {
-        List<Currency> exchangeXML;
+    //public class Converter : AvaliableFunctions
+    //{
+    //    List<Currency> exchangeXML;
 
-        public Converter(List<Currency> exchangeXML)
-        {
-            this.exchangeXML = exchangeXML;
-        }
+    //    public Converter(List<Currency> exchangeXML)
+    //    {
+    //        this.exchangeXML = exchangeXML;
+    //    }
 
-        public double convertTo(string symbol, string symbol2, double value)
-        {
-            return value;            
-        }
-    }
+    //    public double convertTo(string symbol, string symbol2, double value)
+    //    {
+    //        return value;            
+    //    }
+    //}
 }
