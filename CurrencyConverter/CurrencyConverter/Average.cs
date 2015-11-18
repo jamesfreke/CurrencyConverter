@@ -8,9 +8,17 @@ namespace UnitTestProject
 {
     public class Average : AvaliableFunctions
     {
-        public List<Currency> GetList()
+        private List<Currency> _listOfCurrencies;
+
+        public List<Currency> listOfCurrencies
         {
-            throw new NotImplementedException();
+            get { return _listOfCurrencies; }
+            set { _listOfCurrencies = value; }
+        }
+        
+        public virtual List<Currency> GetList()
+        {
+            return listOfCurrencies;
         }
     }
 }

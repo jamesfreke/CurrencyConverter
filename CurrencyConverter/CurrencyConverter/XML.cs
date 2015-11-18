@@ -9,8 +9,17 @@ namespace CurrencyConverter
 {
     public class XML
     {
+        private List<Currency> _dataListFromXML;
+        public List<Currency> dataListFromXML
+        {
+            get { return _dataListFromXML; }
+            set { _dataListFromXML = value; }
+        }
+
+        
         public void ReadXmlFile(string filename)
         {
+            dataListFromXML = new List<Currency>();
 
             XmlDocument doc = new XmlDocument();
             doc.Load(filename);
@@ -23,14 +32,17 @@ namespace CurrencyConverter
                 {
                     foreach (XmlNode n2 in n.ChildNodes)
                     {
-                        string time = n2.Attributes[0].Value;
-                        Console.WriteLine(time);
+                        string date = n2.Attributes[0].Value;
+                        Console.WriteLine(date);
                         foreach (XmlNode n3 in n2.ChildNodes)
                         {
                             string currency = n3.Attributes[0].Value;
                             Console.WriteLine(currency);
                             string rate = n3.Attributes[1].Value;
+                            double value = Convert.ToDouble(rate);
                             Console.WriteLine(rate);
+                            //Currency input = new Currency(currency, value, date);
+                            dataListFromXML.Add(new Currency(currency, value, date));
                         }
                     }
                 }
