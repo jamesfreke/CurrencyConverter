@@ -58,7 +58,7 @@ namespace UnitTestProject
 
             List<Currency> actual = comparison.strength("");
 
-            Assert.IsTrue(actual.SequenceEqual(expected));
+            Assert.IsTrue(actual.SequenceEqual(expected,new CurrencyComparerSymbolAndValue()));
         }
 
         [TestMethod]
@@ -238,7 +238,7 @@ namespace UnitTestProject
 
             List<Currency> actual = comparison.HighestAndLowestPerCurrency("");
 
-            Assert.IsTrue(actual.All(x => expected.Contains(x)));
+            Assert.IsTrue(actual.SequenceEqual(expected,new CurrencyComparerSymbolAndValue()));
         }
 
         [TestMethod]
@@ -293,7 +293,7 @@ namespace UnitTestProject
         public void Test_GreatestOrSmallestChangeNintyDays_ReturnsAListOfTwoElements_WhenGivenAListOfFiveElementsFromTheSameSymbol()
         {
             Mock<Currency> a = new Mock<Currency>("EUR", 1, "12-12-2012");
-            Mock<Currency> b = new Mock<Currency>("EUR", 0, "13-12-2012");
+            Mock<Currency> b = new Mock<Currency>("EUR", 1, "13-12-2012");
             Mock<Currency> c = new Mock<Currency>("EUR", 4, "14-12-2012");
             Mock<Currency> d = new Mock<Currency>("GBP", 3, "12-12-2012");
             Mock<Currency> e = new Mock<Currency>("GBP", 3, "13-12-2012");
@@ -315,11 +315,11 @@ namespace UnitTestProject
             Comparison comparison = new Comparison(distinctDoesNotLikeMockLists);
 
             List<Currency> expected = new List<Currency>();
-            expected.Add(new Currency("EUR", -4));
+            expected.Add(new Currency("EUR", 3));
 
             List<Currency> actual = comparison.GreatestOrSmallestChangeNintyDays("", true);
 
-            Assert.IsTrue(actual.SequenceEqual(expected,new CurrencyComparerSymbolAndValue()));
+            Assert.IsTrue(actual.SequenceEqual(expected,new CurrencyComparerSymbolAndValue()));      
         }
 
         [TestMethod]
@@ -356,16 +356,16 @@ namespace UnitTestProject
             Comparison comparison = new Comparison(distinctDoesNotLikeMockLists);
 
             List<Currency> expected = new List<Currency>(){
-            new Currency("JPY", -6),
-            new Currency("EUR", -4), 
-            new Currency("GBP", -1),
+            new Currency("HRK", -40),
+            new Currency("RUB", -20),
+            new Currency("ZAR", -10),
+            new Currency("CZK", -3),
+            new Currency("RON", -3),
+            new Currency("BGN", -1),
             new Currency("USD", 0),
-            new Currency("BGN", 1),
-            new Currency("CZK", 3),
-            new Currency("RON", 3),
-            new Currency("ZAR", 10),
-            new Currency("RUB", 20),
-            new Currency("HRK", 40)
+            new Currency("GBP", 1),
+            new Currency("EUR", 4),
+            new Currency("JPY", 6)
             };
 
             List<Currency> actual = comparison.GreatestOrSmallestChangeNintyDays("", false);
@@ -399,7 +399,7 @@ namespace UnitTestProject
             Comparison comparison = new Comparison(distinctDoesNotLikeMockLists);
 
             List<Currency> expected = new List<Currency>();
-            expected.Add(new Currency("EUR", -4));
+            expected.Add(new Currency("EUR", 4));
 
             List<Currency> actual = comparison.GreatestOrSmallestChangeNintyDays("GBP", true);
 
@@ -440,16 +440,16 @@ namespace UnitTestProject
             Comparison comparison = new Comparison(distinctDoesNotLikeMockLists);
 
             List<Currency> expected = new List<Currency>(){
-            new Currency("JPY", -12),
-            new Currency("EUR", -8), 
-            new Currency("GBP", 0),//
+            new Currency("HRK", -80),
+            new Currency("RUB", -40),
+            new Currency("ZAR", -20),
+            new Currency("CZK", -6),
+            new Currency("RON", -6),
+            new Currency("BGN", -2),
+            new Currency("GBP", 0),
             new Currency("USD", 0),
-            new Currency("BGN", 2),
-            new Currency("CZK", 6),
-            new Currency("RON", 6),
-            new Currency("ZAR", 20),
-            new Currency("RUB", 40),
-            new Currency("HRK", 80)
+            new Currency("EUR", 8), 
+            new Currency("JPY", 12)
             };
 
             List<Currency> actual = comparison.GreatestOrSmallestChangeNintyDays("GBP", false);

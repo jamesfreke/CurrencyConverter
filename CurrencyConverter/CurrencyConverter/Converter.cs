@@ -36,7 +36,7 @@ namespace CurrencyConverter
                 }
                 else
                 {
-                    string returnValue3 = Math.Round((rate2 / rate),2) + "";
+                    string returnValue3 = Math.Round((rate2 / rate)*value,2) + "";
 
                     return value + " " + symbol1 + " is " + returnValue3 + " " + symbol2;
                 }

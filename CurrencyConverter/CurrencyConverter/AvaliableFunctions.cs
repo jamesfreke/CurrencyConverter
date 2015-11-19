@@ -8,7 +8,6 @@ namespace CurrencyConverter
 {
     public abstract class AvaliableFunctions
     {
-
         private List<Currency> _exchangeXML;
         public List<Currency> exchangeXML
         {
