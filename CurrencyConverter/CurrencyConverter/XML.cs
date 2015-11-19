@@ -9,7 +9,7 @@ namespace CurrencyConverter
 {
     public class XML : AvaliableFunctions
     {
-        public void XMLSetUp()
+        public List<Currency> XMLSetUp()
         {
             //Creates new XML doc, named doc which takes in a filename eurocurrencies.
             XmlDocument doc = new XmlDocument();
@@ -19,13 +19,10 @@ namespace CurrencyConverter
             XmlNodeList nodeList = doc.DocumentElement.ChildNodes;
 
             XMLController XmLController = new XMLController();
+            exchangeXML = new List<Currency>();
             exchangeXML = XmLController.ReadXmlFile(nodeList);
+            return exchangeXML;
         }
-        
-
-        
-        
-
         
     }
 }
