@@ -8,13 +8,6 @@ namespace CurrencyConverter
 {
     public abstract class AvaliableFunctions
     {
-        private string _chosenCurrency;
-        public string chosenCurrency
-        {
-            get { return _chosenCurrency; }
-            set { _chosenCurrency = value; }
-        }
-
         private List<Currency> _exchangeXML;
         public List<Currency> exchangeXML
         {

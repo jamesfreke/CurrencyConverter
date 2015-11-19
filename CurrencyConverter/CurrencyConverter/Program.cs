@@ -12,7 +12,7 @@ namespace CurrencyConverter
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to  (TM)!");
+            Console.WriteLine("Welcome to HULK  (TM)!");
             Console.WriteLine("Note: The data is correct for the 18/11/2015 and 90 days prior to this date.");
             Console.WriteLine("-------");
             Console.WriteLine("Preparing the data. Please wait...");

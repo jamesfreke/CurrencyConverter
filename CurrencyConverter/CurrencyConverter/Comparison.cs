@@ -13,6 +13,34 @@ namespace CurrencyConverter
             this.exchangeXML = exchangeXML;
         }
 
+        public List<Currency> ConvertListData(string currencyCompareTo, bool nintyDays)
+        {
+            List<Currency> goThrough = new List<Currency>();
+            List<Currency> answer = new List<Currency>();
+
+            if(!nintyDays)
+            {
+                goThrough = exchangeXML.FindAll(d => d.date == exchangeXML[0].date).ToList();
+            }
+            else
+            {
+                goThrough = exchangeXML.ToList();
+            }
+
+            if (currencyCompareTo != "EUR")
+            {
+                double toValue = goThrough.Find(x => x.symbol == currencyCompareTo).value;
+
+                foreach (Currency c in goThrough)
+                {
+                    answer.Add(new Currency(c.symbol, Math.Round((c.value / toValue), 2), c.date));
+                }
+                return answer;
+            }
+
+            return goThrough;
+        }
+
         /// <summary>
         /// Assumption: List is sorted to latest date on top.
         /// </summary>
@@ -25,29 +53,11 @@ namespace CurrencyConverter
                 return answer;
             }
 
-            answer = exchangeXML.FindAll(d => d.date == exchangeXML[0].date).ToList();
-
-            string currencyToCompare = "";
-
-            if (currencyCompareTo == "")
+            if(currencyCompareTo == "")
             {
-                currencyToCompare = "EUR";
+                currencyCompareTo = "EUR";
             }
-            else
-            {
-                currencyToCompare = currencyCompareTo;
-                double toValue = answer.Find(x => x.symbol == currencyToCompare).value;
-                List<Currency> store = new List<Currency>();
-                Converter converter = new Converter(answer);
-
-                foreach (Currency c in answer)
-                {
-                    store.Add(new Currency(c.symbol, Math.Round((c.value / toValue),2), c.date));
-                }
-
-                answer = new List<Currency>();
-                answer.AddRange(store);
-            }
+            answer = ConvertListData(currencyCompareTo, false);
 
             answer = answer.OrderBy(r => r.value).ToList();
 
@@ -68,28 +78,17 @@ namespace CurrencyConverter
                 return answer;
             }
 
-            answer = exchangeXML.FindAll(d => d.date == exchangeXML[0].date).ToList();
+            Currency currency;
 
-            string currencyToCompare = "";
-            if (currencyCompareTo == "")
+            if(currencyCompareTo == "")
             {
-                currencyToCompare = "EUR";
+                currencyCompareTo = "EUR";
             }
-            else
-            {
-                currencyToCompare = currencyCompareTo;
-                double toValue = answer.Find(x => x.symbol == currencyToCompare).value;
-                List<Currency> store = new List<Currency>();
-                foreach (Currency c in answer)
-                {
-                    store.Add(new Currency(c.symbol, Math.Round((c.value / toValue), 2), c.date));
-                }
-                answer = new List<Currency>();
-                answer.AddRange(store);
-            }
-            
-            Currency euro = answer.Find(c => c.symbol == currencyToCompare);
-            answer = answer.FindAll(r => r.value > euro.value);
+
+            answer = ConvertListData(currencyCompareTo,false);
+            currency = answer.Find(c => c.symbol == currencyCompareTo);
+
+            answer = answer.FindAll(r => r.value > currency.value);
 
             return answer;
         }
@@ -110,44 +109,27 @@ namespace CurrencyConverter
             return new Currency("", 0, "");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="currencyAgainist"></param>
+        /// <returns>A list that is ordered with symbol lowest, symbol highest, symbol1 lowest, symbol1 highest, etc.</returns>
         public List<Currency> HighestAndLowestPerCurrency(string currencyAgainist)
         {
             List<Currency> answer = new List<Currency>();
-            List<Currency> store = new List<Currency>();
-            List<Currency> xmlList = new List<Currency>();
             
             if(exchangeXML.Count == 0)
             {
                 return answer;
             }
 
-            xmlList = exchangeXML.ToList();
-
-            string currencyCompareTo;
             if(currencyAgainist == "")
             {
-                currencyCompareTo = "EUR";
+                currencyAgainist = "EUR";
             }
-            else
-            {
-                currencyCompareTo = currencyAgainist;
-                List<Currency> distinctDates = new List<Currency>();
-                distinctDates = xmlList.Distinct(new CurrencyComparerDates()).ToList();
 
-                foreach (Currency c in distinctDates)
-                {
-                    List<Currency> specificDate = new List<Currency>();
-                    specificDate = xmlList.FindAll(x => x.date == c.date);
-                    double toValue = specificDate.Find(x => x.symbol == currencyCompareTo).value;
-
-                    foreach (Currency curr in specificDate)
-                    {
-                        store.Add(new Currency(curr.symbol, Math.Round((curr.value / toValue), 2), curr.date));
-                    }
-                }
-                xmlList = new List<Currency>();
-                xmlList.AddRange(store);
-            }
+            List<Currency> xmlList = new List<Currency>();
+            xmlList = ConvertListData(currencyAgainist, true);
 
             List<Currency> distinctSymbol = new List<Currency>();
             distinctSymbol = exchangeXML.Distinct(new CurrencyComparerSymbol()).ToList();
@@ -177,58 +159,30 @@ namespace CurrencyConverter
                 return answer;
             }
 
-            List<Currency> store = new List<Currency>();
             List<Currency> xmlList = new List<Currency>();
-            xmlList = exchangeXML.ToList();
 
-            string currencyCompare;
             if (currencyCompareTo == "")
             {
-                currencyCompare = "EUR";
+                currencyCompareTo = "EUR";
             }
-            else
-            {
-                currencyCompare = currencyCompareTo;
-                List<Currency> distinctDates = new List<Currency>();
-                distinctDates = xmlList.Distinct(new CurrencyComparerDates()).ToList();
 
-                foreach (Currency c in distinctDates)
+            xmlList = HighestAndLowestPerCurrency(currencyCompareTo);
+            xmlList = xmlList.OrderBy(x => x.symbol).ThenBy(x => x.date).ToList();
+            List<Currency> store = new List<Currency>();
+
+            for (int i = 0; i+1 < xmlList.Count; i+=2)
+            {
+                store.Add(new Currency(xmlList[i].symbol,(xmlList[i+1].value-xmlList[i].value)));
+            }
+
+                if (greatest)
                 {
-                    List<Currency> specificDate = new List<Currency>();
-                    specificDate = xmlList.FindAll(x => x.date == c.date);
-                    double toValue = specificDate.Find(x => x.symbol == currencyCompare).value;
-
-                    foreach (Currency curr in specificDate)
-                    {
-                        store.Add(new Currency(curr.symbol, Math.Round((curr.value / toValue), 2), curr.date));
-                    }
+                    store = store.OrderByDescending(x => Math.Abs(x.value)).ToList();
+                    return store.FindAll(x => x.value == store[0].value).ToList();
                 }
-                xmlList = new List<Currency>();
-                xmlList.AddRange(store);
-            }
 
-            List<Currency> distinctSymbol = new List<Currency>();
-            distinctSymbol = exchangeXML.Distinct(new CurrencyComparerSymbol()).ToList();
-            List<Currency> tempStore = new List<Currency>();
-
-            foreach (Currency c in distinctSymbol)
-            {
-                List<Currency> temporary = new List<Currency>();
-                temporary.Add(HighestOrLowestRate(c.symbol, true,xmlList));
-                temporary.Add(HighestOrLowestRate(c.symbol, false,xmlList));
-                temporary = temporary.OrderByDescending(x => x.date).ToList();
-                double answerStore = temporary[1].value - temporary[0].value;
-                tempStore.Add(new Currency(c.symbol, answerStore));
-            }
-
-            if (greatest)
-            {
-                tempStore = tempStore.OrderByDescending(x => Math.Abs(x.value)).ToList();
-                return tempStore.FindAll(x => x.value == tempStore[0].value).ToList();
-            }
-
-            tempStore = tempStore.OrderBy(x => Math.Abs(x.value)).Take(10).OrderBy(x => x.value).ToList();
-            return tempStore;
+                store = store.OrderBy(x => Math.Abs(x.value)).Take(10).OrderBy(x => x.value).ToList();
+                return store;
 
         }
 
