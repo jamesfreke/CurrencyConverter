@@ -10,7 +10,7 @@ namespace CurrencyConverter
 {
     class Program
     {
-        List<Currency> xmllist;
+        static List<Currency> xmllist;
 
         public static void AskOperation()
         {
