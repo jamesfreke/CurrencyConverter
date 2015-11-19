@@ -38,10 +38,11 @@ namespace CurrencyConverter
                 currencyToCompare = currencyCompareTo;
                 double toValue = answer.Find(x => x.symbol == currencyToCompare).value;
                 List<Currency> store = new List<Currency>();
+                Converter converter = new Converter(answer);
 
                 foreach (Currency c in answer)
                 {
-                    store.Add(new Currency(c.symbol, c.value / toValue, c.date));
+                    store.Add(new Currency(c.symbol, Math.Round((c.value / toValue),2), c.date));
                 }
 
                 answer = new List<Currency>();
@@ -81,7 +82,7 @@ namespace CurrencyConverter
                 List<Currency> store = new List<Currency>();
                 foreach (Currency c in answer)
                 {
-                    store.Add(new Currency(c.symbol, c.value / toValue, c.date));
+                    store.Add(new Currency(c.symbol, Math.Round((c.value / toValue), 2), c.date));
                 }
                 answer = new List<Currency>();
                 answer.AddRange(store);
@@ -141,7 +142,7 @@ namespace CurrencyConverter
 
                     foreach (Currency curr in specificDate)
                     {
-                        store.Add(new Currency(curr.symbol, curr.value / toValue, curr.date));
+                        store.Add(new Currency(curr.symbol, Math.Round((curr.value / toValue), 2), curr.date));
                     }
                 }
                 xmlList = new List<Currency>();
@@ -199,7 +200,7 @@ namespace CurrencyConverter
 
                     foreach (Currency curr in specificDate)
                     {
-                        store.Add(new Currency(curr.symbol, curr.value / toValue, curr.date));
+                        store.Add(new Currency(curr.symbol, Math.Round((curr.value / toValue), 2), curr.date));
                     }
                 }
                 xmlList = new List<Currency>();

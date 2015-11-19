@@ -8,30 +8,20 @@ namespace UnitTestProject
 {
     public class Average : AvaliableFunctions
     {
-        //Creates a space for the xml class object
-        private XML _xml;
-        public XML xml
+        public Average(List<Currency> Xml)
         {
-            get { return _xml; }
-            set { _xml = value; }
-        }
-
-        //Constructor to populate the xml object space to access the xml in this class
-        public Average(XML Xml)
-        {
-            xml = Xml;
+            exchangeXML = Xml;
         }
 
         List<Currency> listOfAverages = new List<Currency>();
-        
-        public List<Currency> GetList()
-        {
-            return exchangeXML;
-        }
 
+        /// <summary>
+        /// Assumption: EUR is the last currency in the list, in line with our XML code
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetCurrencyNames()
         {
-             List<string> listOfCurrencyNames = new List<string>();
+            List<string> listOfCurrencyNames = new List<string>();
 
             int numberOfCurrencies = exchangeXML.FindIndex(x => x.symbol == "EUR");
 
@@ -42,15 +32,24 @@ namespace UnitTestProject
             return listOfCurrencyNames;
         }
 
-       
-
-        public double FindAverage(List<Currency> Currency)
+        public List<Currency> FindAverage()
         {
-            
+            List<Currency> answer = new List<Currency>();
 
-            double sum = 0;
-            //exchangeXML.FindAll();
-            return sum;
+            foreach (string symbol in GetCurrencyNames())
+            {
+                List<Currency> tempStore = new List<Currency>();
+                tempStore = exchangeXML.FindAll(x => x.symbol == symbol).ToList();
+
+                double sum = 0;
+                foreach(Currency curr in tempStore)
+                {
+                    sum += curr.value;
+                }
+
+                answer.Add(new Currency(symbol,(sum/tempStore.Count)));
+            }
+            return answer;
         }
     }
 }
