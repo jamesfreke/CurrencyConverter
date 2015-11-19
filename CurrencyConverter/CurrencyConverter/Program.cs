@@ -16,14 +16,11 @@ namespace CurrencyConverter
             Console.WriteLine("Note: The data is correct for the 18/11/2015 and 90 days prior to this date.");
             Console.WriteLine("-------");
             Console.WriteLine("Preparing the data. Please wait...");
-
+            Console.WriteLine("-------");
             XML xml = new XML();
             xml.XMLSetUp();
-            
 
-            Console.ReadLine();
-
-            
+            Console.WriteLine("System is ready.");
 
             //Console.WriteLine("What do you want to do? {0}", );
             
