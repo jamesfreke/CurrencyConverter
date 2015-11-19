@@ -40,7 +40,8 @@ namespace CurrencyConverter
         {
             get { return _date; }
             set { _date = value; }
-        }        
-        
+        }
+
+        string USD = "US Dollars";
     }
 }
