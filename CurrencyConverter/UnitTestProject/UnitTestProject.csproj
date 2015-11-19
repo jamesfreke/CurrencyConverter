@@ -55,6 +55,8 @@
   <ItemGroup>
     <Compile Include="AverageTest.cs" />
     <Compile Include="ConverterTests.cs" />
+    <Compile Include="InputController.cs" />
+    <Compile Include="InputControllerTest.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StrengthTests.cs" />

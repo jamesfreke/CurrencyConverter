@@ -21,11 +21,6 @@ namespace CurrencyConverter
             XMLController xmlController = new XMLController();
 
             xml.XMLSetUp();
-            //xmlTest2.ReadXmlFile();
-            
-
-            Console.ReadLine();
-
             
 
             //Console.WriteLine("What do you want to do? {0}", );
