@@ -30,7 +30,7 @@ namespace UnitTestProject
             inputController.exchangeXML = mockList.Object;
 
             //Act
-            bool exists = inputController.LongToShortConverter(input);
+            string convertedString = inputController.LongToShortConverter(input);
 
             //Assert
             Assert.IsTrue(exists);

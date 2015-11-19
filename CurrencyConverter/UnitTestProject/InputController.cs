@@ -8,6 +8,12 @@ namespace UnitTestProject
 {
     public class InputController : AvaliableFunctions
     {
+        public InputController()
+        {
+            LongNames longNames = new LongNames();
+            Dictionary<string, string> dOfLongNames = longNames.GetDictionary();
+        }
+
         internal bool longerThanThree(string input)
         {
             //checks to see if the string is longer than three
@@ -19,17 +25,15 @@ namespace UnitTestProject
             return stringIsLongerThanThree;
         }
 
-        //First need to search the directionairies to check for different inputs
-
         internal bool ChecksExistence(string input)
         {
             bool exists = exchangeXML.Exists(symbol => symbol.symbol == input);
             return exists;
         }
 
-        internal bool LongToShortConverter(string input)
-        {
-            //Code
-        }
+        //internal string LongToShortConverter(string input)
+        //{
+        //    string symbol = exchangeXML.Exists(
+        //}
     }
 }
