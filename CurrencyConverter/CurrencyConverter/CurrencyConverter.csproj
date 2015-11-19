@@ -45,6 +45,7 @@
     <Compile Include="Average.cs" />
     <Compile Include="Converter.cs" />
     <Compile Include="Currency.cs" />
+    <Compile Include="CurrencyComparerDates.cs" />
     <Compile Include="CurrencyComparerSymbol.cs" />
     <Compile Include="CurrencyComparerSymbolAndValue.cs" />
     <Compile Include="Program.cs" />
